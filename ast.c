@@ -1,6 +1,20 @@
 #include "ast.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+bool check_global_identifiers(const char *name) {
+	// NOTE: Assuming we have other reserved/global functions/keywords.
+	const char *global[] = {"print"};
+
+	for (size_t i = 0; i < sizeof(global) / sizeof(global[0]); ++i) {
+		if (strcmp(name, global[i]) == 0) {
+			return true;
+		}
+	}
+
+	return false;
+}
 
 AstNodeArguments *make_ast_node_arguments() {
 	AstNodeArguments *args = malloc(sizeof(AstNodeArguments));
@@ -79,6 +93,7 @@ AstNodeFunctionCall *make_ast_node_function_call(AstNodeArguments *args, char *n
 	}
 
 	function_call->kind = AstNodeKindFunctionCall;
+	function_call->global = check_global_identifiers(name);
 	function_call->name = name;
 	function_call->arguments = args;
 
@@ -89,6 +104,7 @@ void print_ast_node_function_call(AstNodeFunctionCall *fc) {
 	puts("- FunctionCall: {kind, name, arguments}");
 	printf("\tkind: %d\n", fc->kind);
 	printf("\tname: %s\n", fc->name);
+	printf("\tglobal: %d\n", fc->global);
 
 	if (fc->arguments->length >= 1) {
 		printf("\targuments: [%ld elements]\n", fc->arguments->length);

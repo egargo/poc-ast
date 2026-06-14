@@ -60,6 +60,8 @@ typedef struct AstNode {
 	};
 } AstNode;
 
+bool check_global_identifiers(const char *name);
+
 AstNodeArguments *make_ast_node_arguments();
 void *push_ast_node_argument_float(AstNodeArguments *args, double value);
 void *push_ast_node_argument_integer(AstNodeArguments *args, int value);
