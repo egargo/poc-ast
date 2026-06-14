@@ -67,7 +67,6 @@ void *push_ast_node_argument_string(AstNodeArguments *args, char *value) {
 
 	args->values[args->length].kind = AstNodeKindLiteralString;
 	args->values[args->length].value.literal_string = *make_ast_node_literal_string(value);
-	make_ast_node_literal_string(value);
 	args->length++;
 
 	return NULL;
