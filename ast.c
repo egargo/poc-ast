@@ -111,17 +111,21 @@ void print_ast_node_function_call(AstNodeFunctionCall *fc) {
 
 		for (size_t i = 0; i < fc->arguments->length; ++i) {
 			AstNodeKind kind = fc->arguments->values[i].kind;
-			printf("\t- kind: %d\n", kind);
-
 			switch (kind) {
 				case AstNodeKindLiteralFloat:
-					printf("\t- value: %f\n", fc->arguments->values[i].value.literal_float.value);
+					printf("\t- LiteralFloat\n");
+					printf("\t\t- kind: %d\n", kind);
+					printf("\t\t- value: %f\n", fc->arguments->values[i].value.literal_float.value);
 					break;
 				case AstNodeKindLiteralInteger:
-					printf("\t- value: %d\n", fc->arguments->values[i].value.literal_integer.value);
+					printf("\t- LiteralInteger\n");
+					printf("\t\t- kind: %d\n", kind);
+					printf("\t\t- value: %d\n", fc->arguments->values[i].value.literal_integer.value);
 					break;
 				case AstNodeKindLiteralString:
-					printf("\t- value: %s\n", fc->arguments->values[i].value.literal_string.value);
+					printf("\t- LiteralString\n");
+					printf("\t\t- kind: %d\n", kind);
+					printf("\t\t- value: %s\n", fc->arguments->values[i].value.literal_string.value);
 					break;
 			}
 		}
