@@ -1,11 +1,38 @@
 #include "ast.h"
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 bool check_global_identifiers(const char *name) {
-	// NOTE: Assuming we have other reserved/global functions/keywords.
-	const char *global[] = {"print"};
+	const char *global[] = {
+		// builtin functions
+		"print",
+
+		// keywords
+		// logical and boolean operators
+		"true",
+		"false",
+		"and",
+		"or",
+		"not",
+		"nil",
+
+		// function and scope
+		"pub",
+		"fun",
+		"end",
+		"return",
+
+		// control flow
+		"if",
+		"elseif",
+		"else",
+		"for",
+		"while",
+		"do",
+		"break",
+	};
 
 	for (size_t i = 0; i < sizeof(global) / sizeof(global[0]); ++i) {
 		if (strcmp(name, global[i]) == 0) {
