@@ -26,19 +26,17 @@ typedef struct AstNodeLiteralString {
 	char *value;
 } AstNodeLiteralString;
 
-typedef struct AstNodeArgumentValue {
-	AstNodeKind kind;
-	union {
-		AstNodeLiteralString literal_string;
-		AstNodeLiteralInteger literal_integer;
-		AstNodeLiteralFloat literal_float;
-	} value;
-} AstNodeArgumentValue;
-
 typedef struct AstNodeArguments {
 	size_t length;
 	size_t capacity;
-	AstNodeArgumentValue *values;
+	struct {
+		AstNodeKind kind;
+		union {
+			AstNodeLiteralString literal_string;
+			AstNodeLiteralInteger literal_integer;
+			AstNodeLiteralFloat literal_float;
+		} value;
+	} *values;
 } AstNodeArguments;
 
 typedef struct AstNodeFunctionCall {
@@ -48,18 +46,18 @@ typedef struct AstNodeFunctionCall {
 	AstNodeArguments *arguments;
 } AstNodeFunctionCall;
 
-typedef struct AstNodeValue {
-	AstNodeKind kind;
-	union {
-		AstNodeFunctionCall function_call;
-	} item;
-} AstNodeValue;
-
 typedef struct AstNode {
 	AstNodeKind kind;
 	size_t length;
 	size_t capacity;
-	AstNodeValue *body;
+	union {
+		struct {
+			AstNodeKind kind;
+			union {
+				AstNodeFunctionCall function_call;
+			} item;
+		} *body;
+	};
 } AstNode;
 
 AstNodeArguments *make_ast_node_arguments();
